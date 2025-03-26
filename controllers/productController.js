@@ -59,10 +59,15 @@ exports.deleteProduct = async (req, res) => {
 exports.updateProductStock = async (req, res) => {
     try {
         const { stock } = req.body;
-        const product = await Product.findByIdAndUpdate(req.params.id, { stock }, { new: true });
-        if (!product) return res.status(404).json({ error: "Product not found" });
-
-        return res.status(200).json({ message: "Stock updated", product });
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            { stock },
+            { new: true }
+        );
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+        return res.status(200).json({ message: "Stock updated successfully", product });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
